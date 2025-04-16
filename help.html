@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - SafeCare Hospital</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="additional-pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+          --safecare-blue: #007bff; /* Standard blue for branding */
+          --safecare-blue-light: #90e0ef; /* Navbar background */
+          --safecare-blue-dark: #023e8a;  /* Strong contrast blue for hover */
+        }
+        .internal-page header {
+          background-color: var(--safecare-blue) !important;
+          transition: none !important;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Keeps the shadow */
+        }
+
+        body {
+          margin: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f8f9fa;
+          padding-top: 120px;
+        }
+
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background-color: #90e0ef; /* light blue */
+          z-index: 1000;
+          padding: 1rem 0;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: background-color 0.3s ease;
+        }
+
+        .container {
+          max-width: 1200px;
+          margin: auto;
+          padding: 0 20px;
+        }
+
+        .logo-text h1 {
+          color: white;
+          margin: 0;
+          font-size: 2rem;
+        }
+
+        .logo p {
+          margin: 0;
+          color: #555;
+          font-size: 0.9rem;
+        }
+
+        nav .nav-links {
+          list-style: none;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+          margin-top: 1rem;
+          padding: 0;
+        }
+
+        nav .nav-links a {
+          text-decoration: none;
+          color: white; /* Normal state */
+          font-weight: 500;
+          transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover,
+        nav .nav-links a.active {
+          color: var(--safecare-blue-dark); /* Darker blue for better contrast */
+        }
+
+        .branch-header h1 {
+          color: var(--safecare-blue);
+          font-size: 2.5rem;
+          margin-bottom: 10px;
+        }
+
+        .breadcrumbs a {
+          color: #555;
+          text-decoration: none;
+          font-size: 0.9rem;
+        }
+
+        .breadcrumbs a:hover {
+          text-decoration: underline;
+        }
+
+        .breadcrumbs span {
+          font-size: 0.9rem;
+          color: #888;
+        }
+        .page-section {
+            padding: 100px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Live Chat Styles */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: var(--safecare-blue);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+
+        .message.received {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.sent {
+            background-color: var(--safecare-blue);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background-color: var(--safecare-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-input button:hover {
+            background-color: var(--safecare-blue-dark);
+        }
+
+        .chat-btn {
+            cursor: pointer;
+        }
+
+        /* Chat bubble that appears when chat is minimized */
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--safecare-blue);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .chat-bubble:hover {
+            background-color: var(--safecare-blue-dark);
+        }
+
+        /* Notification badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            float: left;
+            margin: 0 1px;
+            background-color: #9E9EA1;
+            display: block;
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+
+        .typing-indicator span:nth-of-type(1) {
+            animation: 1s blink infinite 0.3333s;
+        }
+
+        .typing-indicator span:nth-of-type(2) {
+            animation: 1s blink infinite 0.6666s;
+        }
+
+        .typing-indicator span:nth-of-type(3) {
+            animation: 1s blink infinite 0.9999s;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* FAQ Styles */
+        .faq-category {
+            display: none;
+        }
+
+        .faq-category.active {
+            display: block;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 15px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .faq-answer {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 15px;
+            max-height: 500px;
+        }
+
+        .category-btn {
+            padding: 8px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .category-btn.active {
+            background-color: var(--safecare-blue);
+            color: white;
+        }
+    </style>
+</head>
+<body class="internal-page">
+    <div class="page-background">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-top">
+                    <div class="logo-container">
+                        <img src="assests/logo1.png" alt="logo" class="logo"> 
+                        <div class="logo-text">
+                            <h1>SafeCare Hospital</h1>
+                            <p>Dedicated to patient wellness</p>
+                        </div>
+                    </div>
+                </div>
+       
+               <nav>
+                   <ul class="nav-links">
+                       <li><a href="index.html" class="active">Home</a></li>
+                       <li><a href="branch-details.html">Branches</a></li>
+                       <li><a href="services.html">Our Services</a></li>
+                       <li><a href="specialties.html">Specialties</a></li>
+                       <li><a href="family-card.html">Family Card</a></li>
+                       <li><a href="health-checkups.html">Health Checkups</a></li>
+                       <li><a href="appointment.html">Appointment</a></li>
+                       <li><a href="insurance.html">Insurance</a></li>
+                       <li><a href="help.html">Help</a></li>
+                   </ul>
+                   <div class="mobile-menu-btn">
+                       <i class="fas fa-bars"></i>
+                   </div>
+               </nav>
+           </div>
+       </header> 
+
+        <!-- Help Section -->
+        <section class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1>Help & Support</h1>
+                    <div class="breadcrumbs">
+                        <a href="index.html">Home</a> &gt; 
+                        <span>Help</span>
+                    </div>
+                </div>
+                
+                <!-- Help Options -->
+                <div class="help-options">
+                    <div class="help-option">
+                        <div class="help-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3>FAQs</h3>
+                        <p>Find answers to commonly asked questions</p>
+                        <a href="#faqs" class="btn btn-secondary">View FAQs</a>
+                    </div>
+                    
+                    <div class="help-option">
+                        <div class="help-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Contact Support</h3>
+                        <p>Reach out to our support team</p>
+                        <a href="#contact-form" class="btn btn-secondary">Contact Us</a>
+                    </div>
+                    
+                    <div class="help-option">
+                        <div class="help-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Find a Branch</h3>
+                        <p>Locate our hospitals and clinics</p>
+                        <a href="branch-details.html" class="btn btn-secondary">View Branches</a>
+                    </div>
+                    
+                    <div class="help-option">
+                        <div class="help-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Appointments</h3>
+                        <p>Book, reschedule, or cancel appointments</p>
+                        <a href="appointment.html" class="btn btn-secondary">Manage Appointments</a>
+                    </div>
+                </div>
+                
+                <!-- Search Section -->
+                <div class="search-section">
+                    <h2>How can we help you today?</h2>
+                    <div class="search-container">
+                        <input type="text" id="help-search" placeholder="Search for help topics...">
+                        <button type="button" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="popular-searches">
+                        <span>Popular searches:</span>
+                        <a href="#" data-search="appointment">Appointments</a>
+                        <a href="#" data-search="insurance">Insurance</a>
+                        <a href="#" data-search="billing">Billing</a>
+                        <a href="#" data-search="medical records">Medical Records</a>
+                    </div>
+                </div>
+                
+                <!-- FAQ Section -->
+                <div class="content-section" id="faqs">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    
+                    <div class="faq-categories">
+                        <button class="category-btn active" data-category="general">General</button>
+                        <button class="category-btn" data-category="appointments">Appointments</button>
+                        <button class="category-btn" data-category="insurance">Insurance & Billing</button>
+                        <button class="category-btn" data-category="services">Services</button>
+                        <button class="category-btn" data-category="medical">Medical Information</button>
+                    </div>
+                    
+                    <div class="faq-container">
+                        <!-- General FAQs -->
+                        <div class="faq-category active" id="general-faqs">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What are the visiting hours at SafeCare Hospital?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Our general visiting hours are from 10:00 AM to 8:00 PM daily. However, visiting hours may vary for different departments such as ICU, NICU, and post-operative care units. Please check with the specific department or call our helpline for detailed information.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do I find a doctor at SafeCare Hospital?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>You can find a doctor at SafeCare Hospital in several ways:</p>
+                                    <ul>
+                                        <li>Use the "Find a Doctor" feature on our website to search by specialty, name, or location</li>
+                                        <li>Call our appointment helpline at +91 1234 567 890</li>
+                                        <li>Visit any of our branches and inquire at the information desk</li>
+                                        <li>Ask your primary care physician for a referral to a specialist at SafeCare Hospital</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Is parking available at SafeCare Hospital?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, all our branches have dedicated parking facilities for patients and visitors. Most branches offer free parking for the first 2 hours, with nominal charges thereafter. Valet parking services are also available at select locations for your convenience.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How can I provide feedback about my experience?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>We value your feedback and continuously strive to improve our services. You can provide feedback in the following ways:</p>
+                                    <ul>
+                                        <li>Fill out the feedback form available at all our branches</li>
+                                        <li>Use the contact form on our website</li>
+                                        <li>Email us at feedback@safecarehospital.com</li>
+                                        <li>Call our feedback hotline at +91 1234 567 892</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Appointments FAQs -->
+                        <div class="faq-category" id="appointments-faqs">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do I schedule an appointment?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>You can schedule an appointment in several ways:</p>
+                                    <ul>
+                                        <li>Online: Use our appointment booking system on our website</li>
+                                        <li>Phone: Call our appointment desk at +91 1234 567 890</li>
+                                        <li>In-person: Visit any of our branches and schedule at the appointment desk</li>
+                                        <li>Mobile App: Download our mobile app and book appointments on the go</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do I reschedule or cancel my appointment?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>To reschedule or cancel an appointment, please use one of the following methods:</p>
+                                    <ul>
+                                        <li>Log in to your account on our website and manage your appointments</li>
+                                        <li>Call our appointment desk at +91 1234 567 890</li>
+                                        <li>Use our mobile app to modify your appointment</li>
+                                    </ul>
+                                    <p>We request that you notify us at least 24 hours in advance if you need to reschedule or cancel your appointment.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What should I bring to my appointment?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Please bring the following items to your appointment:</p>
+                                    <ul>
+                                        <li>Photo ID (Aadhar Card, PAN Card, Passport, etc.)</li>
+                                        <li>Insurance card (if applicable)</li>
+                                        <li>List of current medications</li>
+                                        <li>Previous medical records, test results, or imaging studies related to your condition</li>
+                                        <li>Referral letter from your doctor (if applicable)</li>
+                                        <li>Payment method for any co-pays or fees not covered by insurance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Insurance & Billing FAQs -->
+                        <div class="faq-category" id="insurance-faqs">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What insurance plans does SafeCare Hospital accept?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>SafeCare Hospital accepts most major insurance plans, including:</p>
+                                    <ul>
+                                        <li>Government health insurance schemes (CGHS, ECHS, etc.)</li>
+                                        <li>Private insurance providers (Star Health, HDFC ERGO, Bajaj Allianz, etc.)</li>
+                                        <li>Corporate health insurance plans</li>
+                                        <li>International insurance for overseas patients</li>
+                                    </ul>
+                                    <p>Please contact our insurance desk at +91 1234 567 893 to verify if your specific insurance plan is accepted.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How does the billing process work?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Our billing process is designed to be transparent and hassle-free:</p>
+                                    <ul>
+                                        <li>For outpatient services: Payment is collected at the time of service. We accept cash, credit/debit cards, and digital payment methods.</li>
+                                        <li>For inpatient services: An initial deposit is required at admission. Regular interim bills are generated, and the final bill is presented at discharge.</li>
+                                        <li>For insured patients: We offer direct billing to insurance companies for cashless treatment. You may need to pay for services not covered by your insurance.</li>
+                                    </ul>
+                                    <p>Our billing department is available to answer any questions about your bill or insurance coverage.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What is the SafeCare Family Card and how does it work?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>The SafeCare Family Card is our membership program that offers exclusive benefits:</p>
+                                    <ul>
+                                        <li>Discounts on consultations, diagnostics, and procedures</li>
+                                        <li>Priority appointment booking</li>
+                                        <li>Free annual health check-ups for family members</li>
+                                        <li>Dedicated relationship manager</li>
+                                        <li>Special rates for preventive health packages</li>
+                                    </ul>
+                                    <p>The card covers up to 4 family members and is valid for one year from the date of issue. You can apply for the Family Card online or at any of our branches.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How can I get an estimate of my medical costs?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>We understand the importance of financial planning for medical care. You can get a cost estimate in several ways:</p>
+                                    <ul>
+                                        <li>Contact our billing department at +91 1234 567 894 for a general estimate</li>
+                                        <li>For planned procedures, ask your doctor or their office staff for a detailed estimate</li>
+                                        <li>Use our online cost calculator for common procedures (available on our website)</li>
+                                        <li>For complex cases, our financial counselors can provide personalized estimates based on your treatment plan and insurance coverage</li>
+                                    </ul>
+                                    <p>Please note that actual costs may vary based on your specific medical needs and complications that may arise during treatment.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Services FAQs -->
+                        <div class="faq-category" id="services-faqs">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What medical specialties are available at SafeCare Hospital?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>SafeCare Hospital offers a comprehensive range of medical specialties, including but not limited to:</p>
+                                    <ul>
+                                        <li>Cardiology and Cardiac Surgery</li>
+                                        <li>Neurology and Neurosurgery</li>
+                                        <li>Orthopedics and Joint Replacement</li>
+                                        <li>Gastroenterology and GI Surgery</li>
+                                        <li>Oncology (Medical, Surgical, and Radiation)</li>
+                                        <li>Obstetrics and Gynecology</li>
+                                        <li>Pediatrics and Neonatology</li>
+                                        <li>Urology and Nephrology</li>
+                                        <li>Dermatology</li>
+                                        <li>Ophthalmology</li>
+                                        <li>ENT (Ear, Nose, and Throat)</li>
+                                        <li>Pulmonology</li>
+                                        <li>Endocrinology and Diabetology</li>
+                                    </ul>
+                                    <p>Not all specialties may be available at every branch. Please check our website or call our helpline for specialty availability at specific locations.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What diagnostic services are available at SafeCare Hospital?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>We offer state-of-the-art diagnostic services including:</p>
+                                    <ul>
+                                        <li>Advanced Imaging: MRI, CT Scan, PET-CT, Ultrasound, X-ray, Mammography</li>
+                                        <li>Laboratory Services: Complete blood work, microbiology, histopathology, molecular diagnostics</li>
+                                        <li>Cardiac Diagnostics: ECG, Echocardiography, Stress Test, Holter Monitoring</li>
+                                        <li>Neurological Diagnostics: EEG, EMG, NCV studies</li>
+                                        <li>Pulmonary Function Tests</li>
+                                        <li>Endoscopy and Colonoscopy</li>
+                                        <li>Sleep Studies</li>
+                                    </ul>
+                                    <p>Our diagnostic centers are equipped with the latest technology and staffed by experienced technicians and specialists to ensure accurate results.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What health check-up packages does SafeCare Hospital offer?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>We offer various health check-up packages tailored to different age groups and health concerns:</p>
+                                    <ul>
+                                        <li>Basic Health Check-up: Essential tests for general health assessment</li>
+                                        <li>Comprehensive Health Check-up: Detailed evaluation of all major body systems</li>
+                                        <li>Cardiac Health Check-up: Focused on heart health</li>
+                                        <li>Women's Wellness Package: Includes gynecological examination and breast cancer screening</li>
+                                        <li>Men's Wellness Package: Includes prostate health assessment</li>
+                                        <li>Senior Citizen Package: Comprehensive assessment for those above 60 years</li>
+                                        <li>Executive Health Check-up: Comprehensive package with minimal waiting time</li>
+                                        <li>Diabetes Risk Assessment: For those with family history or at risk of diabetes</li>
+                                    </ul>
+                                    <p>You can view detailed information about each package and book online through our website or by calling our health check-up desk.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Does SafeCare Hospital offer emergency services?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, all our major branches offer 24/7 emergency services with:</p>
+                                    <ul>
+                                        <li>Fully equipped emergency departments staffed by emergency medicine specialists</li>
+                                        <li>Trauma care facilities</li>
+                                        <li>Critical care ambulance services with advanced life support</li>
+                                        <li>Cardiac emergency unit</li>
+                                        <li>Stroke management team</li>
+                                    </ul>
+                                    <p>In case of a medical emergency, please call our emergency hotline at +91 1800 123 456 for immediate assistance or ambulance dispatch.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Medical Information FAQs -->
+                        <div class="faq-category" id="medical-faqs">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How can I access my medical records?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>You can access your medical records in the following ways:</p>
+                                    <ul>
+                                        <li>Patient Portal: Register for our online patient portal to view your test results, visit summaries, and medication lists</li>
+                                        <li>In-Person Request: Visit the Medical Records Department at any of our branches with a valid ID proof</li>
+                                        <li>Written Request: Submit a signed authorization form by mail or email</li>
+                                        <li>Authorized Representative: A person authorized by you can request records on your behalf with proper documentation</li>
+                                    </ul>
+                                    <p>Please note that processing medical record requests may take 3-5 working days. For urgent requests, please inform the Medical Records Department.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What should I do to prepare for surgery?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Preparation for surgery varies depending on the procedure, but general guidelines include:</p>
+                                    <ul>
+                                        <li>Follow all pre-operative instructions provided by your surgeon</li>
+                                        <li>Complete all required pre-surgical tests and evaluations</li>
+                                        <li>Inform your doctor about all medications, supplements, and allergies</li>
+                                        <li>Stop eating and drinking as instructed before surgery (usually 8-12 hours prior)</li>
+                                        <li>Arrange for someone to drive you home after the procedure</li>
+                                        <li>Bring all necessary documents, including ID, insurance information, and advance directives</li>
+                                        <li>Remove jewelry, contact lenses, and dentures before surgery</li>
+                                    </ul>
+                                    <p>Your surgical team will provide specific instructions tailored to your procedure and medical condition.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What vaccinations are available at SafeCare Hospital?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>We offer a comprehensive range of vaccinations for all age groups:</p>
+                                    <ul>
+                                        <li>Routine childhood immunizations as per national immunization schedule</li>
+                                        <li>Adult vaccinations (Influenza, Pneumococcal, Hepatitis, Tetanus, etc.)</li>
+                                        <li>Travel vaccinations (Yellow Fever, Typhoid, Meningococcal, etc.)</li>
+                                        <li>HPV vaccination</li>
+                                        <li>COVID-19 vaccination</li>
+                                        <li>Seasonal flu shots</li>
+                                    </ul>
+                                    <p>Our vaccination clinics are run by experienced healthcare professionals who can provide guidance on recommended vaccines based on your age, health status, and travel plans.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How can I manage my medications safely?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Safe medication management is crucial for effective treatment. Here are some guidelines:</p>
+                                    <ul>
+                                        <li>Keep an updated list of all medications you take, including over-the-counter drugs and supplements</li>
+                                        <li>Take medications exactly as prescribed by your doctor</li>
+                                        <li>Use pill organizers if you take multiple medications</li>
+                                        <li>Set reminders for medication times</li>
+                                        <li>Store medications properly (away from heat, moisture, and direct sunlight)</li>
+                                        <li>Check expiration dates regularly and dispose of expired medications properly</li>
+                                        <li>Inform all your healthcare providers about all the medications you take to avoid drug interactions</li>
+                                        <li>Never share your prescription medications with others</li>
+                                    </ul>
+                                    <p>Our pharmacy staff can provide personalized medication counseling to help you manage your medications effectively.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="content-section" id="contact-form">
+                    <h2 class="section-title">Contact Support</h2>
+                    <p class="section-description">Can't find what you're looking for? Reach out to our support team for assistance.</p>
+                    
+                    <div class="form-container">
+                        <form id="support-form" class="support-form" action="help_mail.php" method="POST" enctype="multipart/form-data">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="full-name">Full Name <span class="required">*</span></label>
+                                    <input type="text" id="full-name" name="full-name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="query-type">Query Type <span class="required">*</span></label>
+                                    <select id="query-type" name="query-type" required>
+                                        <option value="">Select Query Type</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="appointment">Appointment Related</option>
+                                        <option value="billing">Billing & Insurance</option>
+                                        <option value="medical">Medical Records</option>
+                                        <option value="feedback">Feedback/Suggestions</option>
+                                        <option value="complaint">Complaint</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">Subject <span class="required">*</span></label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Message <span class="required">*</span></label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="attachment">Attachment (if any)</label>
+                                <input type="file" id="attachment" name="attachment">
+                                <p class="file-note">Max file size: 5MB. Allowed formats: PDF, JPG, PNG</p>
+                            </div>
+                            
+                            <div class="form-group terms-checkbox">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="terms" name="terms" required>
+                                    <span>I agree to the <a href="#" class="terms-link">terms and conditions</a> and consent to the processing of my personal data.</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-submit">
+                                <button type="submit" class="btn btn-primary">Submit Query</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="content-section">
+                    <h2 class="section-title">Other Ways to Reach Us</h2>
+                    
+                    <div class="contact-cards">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <h3>Call Us</h3>
+                            <p>General Helpline: <a href="tel:+911234567890">+91 1234 567 890</a></p>
+                            <p>Emergency: <a href="tel:+911800123456">+91 1800 123 456</a></p>
+                            <p>Appointment Desk: <a href="tel:+911234567891">+91 1234 567 891</a></p>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3>Email Us</h3>
+                            <p>General Inquiries: <a href="mailto:info@safecarehospital.com">info@safecarehospital.com</a></p>
+                            <p>Support: <a href="mailto:support@safecarehospital.com">support@safecarehospital.com</a></p>
+                            <p>Feedback: <a href="mailto:feedback@safecarehospital.com">feedback@safecarehospital.com</a></p>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3>Live Chat</h3>
+                            <p>Chat with our support team in real-time during business hours.</p>
+                            <a href="#" class="btn btn-secondary chat-btn" id="start-chat">Start Chat</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Emergency Information -->
+                <div class="emergency-section">
+                    <div class="emergency-icon">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <div class="emergency-content">
+                        <h2>Emergency? Call Our 24/7 Helpline</h2>
+                        <p>For medical emergencies, please call our emergency hotline immediately.</p>
+                        <a href="tel:+911800123456" class="emergency-number">+91 1800 123 456</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h2>SafeCare Hospital</h2>
+                        <p>Dedicated to patient wellness</p>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="branch-details.html">Branches</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Contact Us</h3>
+                        <p><i class="fas fa-phone"></i> <a href="tel:+911234567890" style="color: rgba(255, 255, 255, 0.8);">+91 1234567890</a></p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:info@safecarehospital.com" style="color: rgba(255, 255, 255, 0.8);">info@safecarehospital.com</a></p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical District</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 SafeCare Hospital. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Live Chat Interface -->
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            <h3><i class="fas fa-comments"></i> SafeCare Live Support</h3>
+            <button class="chat-close" id="close-chat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        <div class="typing-indicator" id="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input-field" placeholder="Type your message here...">
+            <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Chat bubble for minimized chat -->
+    <div class="chat-bubble" id="chat-bubble">
+        <i class="fas fa-comments"></i>
+        <div class="notification-badge" id="notification-badge">1</div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="additional-pages.js"></script>
+    
+    <!-- Live Chat JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const startChatBtn = document.getElementById('start-chat');
+            const chatContainer = document.getElementById('chat-container');
+            const closeChatBtn = document.getElementById('close-chat');
+            const chatMessages = document.getElementById('chat-messages');
+            const chatInputField = document.getElementById('chat-input-field');
+            const sendMessageBtn = document.getElementById('send-message');
+            const chatBubble = document.getElementById('chat-bubble');
+            const notificationBadge = document.getElementById('notification-badge');
+            const typingIndicator = document.getElementById('typing-indicator');
+            
+            // Chat state
+            let chatOpen = false;
+            let chatMinimized = false;
+            let unreadMessages = 1; // Start with 1 for the welcome message
+            
+            // Knowledge base for intelligent responses
+            const knowledgeBase = {
+                // General information
+                "branch": "SafeCare Hospital has branches in Hyderabad, Mumbai, Delhi, Pune, Vizag, Bengaluru, Chennai, and Kerala. Each branch is equipped with state-of-the-art facilities and experienced medical professionals.",
+                "location": "SafeCare Hospital has branches in Hyderabad, Mumbai, Delhi, Pune, Vizag, Bengaluru, Chennai, and Kerala. You can find detailed information about each branch on our website.",
+                "contact": "You can contact SafeCare Hospital at +91 1234567890 or email us at info@safecarehospital.com. For emergencies, please call our 24/7 helpline at +91 1800 123 456.",
+                "visiting hours": "Our general visiting hours are from 10:00 AM to 8:00 PM daily. However, visiting hours may vary for different departments such as ICU, NICU, and post-operative care units.",
+                
+                // Services
+                "services": "SafeCare Hospital offers a wide range of services including consultations, diagnostics, surgeries, emergency care, preventive health check-ups, and specialized treatments across various medical specialties.",
+                "specialties": "Our specialties include Cardiology, Neurology, Orthopedics, Gastroenterology, Oncology, Obstetrics and Gynecology, Pediatrics, Urology, Dermatology, Ophthalmology, ENT, Pulmonology, and Endocrinology.",
+                "emergency": "Yes, all our major branches offer 24/7 emergency services with fully equipped emergency departments, trauma care facilities, critical care ambulances, cardiac emergency units, and stroke management teams.",
+                "checkup": "We offer various health check-up packages including Basic Health Check-up, Comprehensive Health Check-up, Cardiac Health Check-up, Women's Wellness Package, Men's Wellness Package, Senior Citizen Package, and more.",
+                
+                // Appointments
+                "appointment": "You can schedule an appointment online through our website, by calling our appointment desk at +91 1234 567 890, visiting any of our branches in person, or using our mobile app.",
+                "doctor": "You can find a doctor at SafeCare Hospital through our website's 'Find a Doctor' feature, by calling our appointment helpline, visiting any branch, or asking your primary care physician for a referral.",
+                "reschedule": "To reschedule or cancel an appointment, please log in to your account on our website, call our appointment desk, or use our mobile app. We request 24 hours notice for any changes.",
+                
+                // Insurance and billing
+                "insurance": "SafeCare Hospital accepts most major insurance plans including government health insurance schemes, private insurance providers, corporate health insurance plans, and international insurance for overseas patients.",
+                "billing": "Our billing process is transparent. For outpatient services, payment is collected at the time of service. For inpatient services, an initial deposit is required, and the final bill is presented at discharge.",
+                "family card": "The SafeCare Family Card offers discounts on consultations and procedures, priority appointment booking, free annual health check-ups, a dedicated relationship manager, and special rates for preventive health packages.",
+                "cost": "You can get a cost estimate by contacting our billing department, asking your doctor for a detailed estimate, using our online cost calculator, or consulting with our financial counselors for personalized estimates.",
+                
+                // Medical information
+                "medical records": "You can access your medical records through our online patient portal, by visiting the Medical Records Department with valid ID, submitting a signed authorization form, or through an authorized representative.",
+                "surgery": "To prepare for surgery, follow all pre-operative instructions, complete required tests, inform your doctor about medications and allergies, stop eating as instructed, arrange for transportation, and bring necessary documents.",
+                "vaccination": "We offer routine childhood immunizations, adult vaccinations, travel vaccinations, HPV vaccination, COVID-19 vaccination, and seasonal flu shots at our vaccination clinics.",
+                "medication": "For safe medication management, keep an updated list of all medications, take them as prescribed, use pill organizers, set reminders, store properly, check expiration dates, and inform all healthcare providers."
+            };
+            
+            // Common greetings and their responses
+            const greetings = {
+                "hi": "Hello! How can I assist you with SafeCare Hospital services today?",
+                "hello": "Hi there! How may I help you today?",
+                "hey": "Hello! What can I do for you today?",
+                "good morning": "Good morning! How can I assist you today?",
+                "good afternoon": "Good afternoon! How may I help you?",
+                "good evening": "Good evening! How can I assist you today?",
+                "thanks": "You're welcome! Is there anything else I can help you with?",
+                "thank you": "You're welcome! Feel free to ask if you have any other questions.",
+                "bye": "Thank you for chatting with us. Have a great day!",
+                "goodbye": "Goodbye! If you need further assistance, feel free to chat with us again."
+            };
+            
+            // Function to find the best response from knowledge base
+            function findResponse(message) {
+                // Check for greetings first
+                const lowerMessage = message.toLowerCase();
+                
+                for (const [key, value] of Object.entries(greetings)) {
+                    if (lowerMessage.includes(key)) {
+                        return value;
+                    }
+                }
+                
+                // Check knowledge base for relevant information
+                let bestMatch = null;
+                let highestScore = 0;
+                
+                for (const [key, value] of Object.entries(knowledgeBase)) {
+                    // Simple keyword matching
+                    if (lowerMessage.includes(key)) {
+                        const score = key.length; // Longer keyword matches are more specific
+                        if (score > highestScore) {
+                            highestScore = score;
+                            bestMatch = value;
+                        }
+                    }
+                }
+                
+                // If no match found, provide a default response
+                if (!bestMatch) {
+                    // Check for common question patterns
+                    if (lowerMessage.includes("how") || lowerMessage.includes("what") || 
+                        lowerMessage.includes("where") || lowerMessage.includes("when") || 
+                        lowerMessage.includes("why") || lowerMessage.includes("?")) {
+                        return "I don't have specific information about that. For detailed assistance, please call our helpline at +91 1234 567 890 or email us at info@safecarehospital.com.";
+                    } else {
+                        return "I understand you're interested in SafeCare Hospital. How can I assist you with appointments, services, or information about our facilities?";
+                    }
+                }
+                
+                return bestMatch;
+            }
+            
+            // Function to add a message to the chat
+            function addMessage(message, isSent) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.classList.add(isSent ? 'sent' : 'received');
+                messageElement.textContent = message;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // If chat is minimized, increment unread count
+                if (chatMinimized) {
+                    unreadMessages++;
+                    notificationBadge.textContent = unreadMessages;
+                    notificationBadge.style.display = 'flex';
+                }
+            }
+            
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                typingIndicator.style.display = 'flex';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to hide typing indicator
+            function hideTypingIndicator() {
+                typingIndicator.style.display = 'none';
+            }
+            
+            // Function to send a message
+            function sendMessage() {
+                const message = chatInputField.value.trim();
+                if (message) {
+                    addMessage(message, true);
+                    chatInputField.value = '';
+                    
+                    // Show typing indicator
+                    showTypingIndicator();
+                    
+                    // Simulate bot response after a delay
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        const response = findResponse(message);
+                        addMessage(response, false);
+                    }, 1500); // Longer delay to simulate thinking and typing
+                }
+            }
+            
+            // Event listeners
+            startChatBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                chatContainer.style.display = 'flex';
+                chatBubble.style.display = 'none';
+                chatOpen = true;
+                chatMinimized = false;
+                
+                // Add welcome message if it's the first time opening
+                if (chatMessages.children.length === 0) {
+                    addMessage("Welcome to SafeCare Hospital Live Support! How can we assist you today?", false);
+                }
+                
+                // Reset unread count
+                unreadMessages = 0;
+                notificationBadge.style.display = 'none';
+            });
+            
+            closeChatBtn.addEventListener('click', function() {
+                chatContainer.style.display = 'none';
+                chatBubble.style.display = 'flex';
+                chatOpen = true;
+                chatMinimized = true;
+            });
+            
+            chatBubble.addEventListener('click', function() {
+                chatContainer.style.display = 'flex';
+                chatBubble.style.display = 'none';
+                chatMinimized = false;
+                
+                // Reset unread count
+                unreadMessages = 0;
+                notificationBadge.style.display = 'none';
+            });
+            
+            sendMessageBtn.addEventListener('click', sendMessage);
+            
+            chatInputField.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Toggle FAQ questions
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    // Close all other answers first
+                    document.querySelectorAll('.faq-answer').forEach(item => {
+                        if (item !== answer) {
+                            item.classList.remove('active');
+                            const otherIcon = item.previousElementSibling.querySelector('i');
+                            otherIcon.classList.remove('fa-chevron-up');
+                            otherIcon.classList.add('fa-chevron-down');
+                        }
+                    });
+                    
+                    // Toggle current answer
+                    answer.classList.toggle('active');
+                    if (answer.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+            
+            // Toggle FAQ categories
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const faqCategories = document.querySelectorAll('.faq-category');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Remove active class from all buttons and categories
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    faqCategories.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding category
+                    this.classList.add('active');
+                    document.getElementById(`${category}-faqs`).classList.add('active');
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('help-search');
+            const searchBtn = document.querySelector('.search-btn');
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                if (searchTerm) {
+                    // Find matching FAQ category and question
+                    let foundCategory = false;
+                    let foundQuestion = false;
+                    
+                    // Search through all FAQ questions
+                    document.querySelectorAll('.faq-question').forEach(question => {
+                        const questionText = question.querySelector('span').textContent.toLowerCase();
+                        if (questionText.includes(searchTerm)) {
+                            // Get the category of this question
+                            const category = question.closest('.faq-category').id.split('-')[0];
+                            
+                            // Activate the category
+                            categoryBtns.forEach(btn => {
+                                if (btn.getAttribute('data-category') === category) {
+                                    btn.click();
+                                    foundCategory = true;
+                                }
+                            });
+                            
+                            // Open the question
+                            setTimeout(() => {
+                                question.click();
+                                question.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                foundQuestion = true;
+                            }, 100);
+                            
+                            // Only handle the first match
+                            return;
+                        }
+                    });
+                    
+                    if (!foundQuestion) {
+                        // If no specific question found, just go to the relevant category
+                        categoryBtns.forEach(btn => {
+                            if (btn.getAttribute('data-category').includes(searchTerm) || 
+                                btn.textContent.toLowerCase().includes(searchTerm)) {
+                                btn.click();
+                                document.getElementById('faqs').scrollIntoView({ behavior: 'smooth' });
+                                foundCategory = true;
+                                return;
+                            }
+                        });
+                    }
+                    
+                    if (!foundCategory && !foundQuestion) {
+                        // If nothing found, suggest live chat
+                        alert("No exact matches found. Please try another search term or use our live chat for assistance.");
+                    }
+                }
+            }
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Popular search terms
+            const popularSearches = document.querySelectorAll('.popular-searches a');
+            popularSearches.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const searchTerm = this.getAttribute('data-search');
+                    searchInput.value = searchTerm;
+                    performSearch();
+                });
+            });
+            
+            // Show chat bubble after a delay
+            setTimeout(() => {
+                if (!chatOpen) {
+                    chatBubble.style.display = 'flex';
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
