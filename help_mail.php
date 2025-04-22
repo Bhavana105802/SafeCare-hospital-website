@@ -26,13 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
         $mail->SMTPAuth = true;
-        $mail->Username = 'abkbhanukiran@gmail.com'; // Replace with your Gmail address
-        $mail->Password = 'xgys hkth ryrn lwnp'; // Replace with your Gmail App Password
+        $mail->Username = 'safecare884@gmail.com'; // Updated to SafeCare email
+        $mail->Password = 'zejo nwxo hzrm rnbo'; // Replace with your Gmail App Password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('your-email@gmail.com', 'SafeCare Hospital'); // Replace with your email
+        $mail->setFrom('safecare884@gmail.com', 'SafeCare Hospital'); // Updated sender email
         $mail->addAddress('bhavs662@gmail.com'); // Replace with the recipient's email
         $mail->addReplyTo($email, $fullName);
 
